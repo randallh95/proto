@@ -25,7 +25,7 @@
                 <!-- Choosing Top K -->
                 <div class="form-group">
                     <label for="k">Top-K</label>
-                    <select id = "k" class="form-control">
+                    <select class="form-control" id = "k" name="k">
                         <% for (int i = 1; i <= 10; i++) {
                                 if (i == 3) {
                                     out.println("<option selected='selected' value='" + i + "'>" + i + "</option>");
@@ -40,7 +40,7 @@
                 <!-- Choosing DateTime -->
                 <div class="form-group">
                     <label for="datetime">Datetime</label>
-                    <input type="datetime-local" name="datetime">
+                    <input type="datetime-local" step="1" name="datetime">
                 </div>  
                 
                 <!-- Submit and reset -->

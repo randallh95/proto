@@ -102,6 +102,28 @@ public class LocationReportDAO {
         return numOfLocationReports;
     }
     
+    public ArrayList<LocationReport> retrieveLocationReportByDate(Date dateTime) throws SQLException{
+        
+        ArrayList<LocationReport> outputList = new ArrayList<>();
+        Timestamp timestamp = new Timestamp(dateTime.getTime());
+        
+        String sql = "select * from location_report where time_stamp = ?";
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ps.setString(1, "" + timestamp);
+        
+        ResultSet rs = ps.executeQuery();
+        
+        while(rs.next()) {
+            int locationID = rs.getInt(1);
+            String macAddress = rs.getString(2);
+            Date date = rs.getDate(3);
+            outputList.add(new LocationReport(locationID, macAddress, date));
+        }
+        
+        return outputList;
+                
+    }
+    
     public ArrayList<Date> retrieveDatesForUserSelection() throws SQLException{
         ArrayList<Date> availableDateList = new ArrayList<>();
         String sql = "select distinct time_stamp from location_report";

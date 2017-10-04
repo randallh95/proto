@@ -5,17 +5,10 @@
  */
 package is203.se.Controller;
 
-import is203.se.DAO.LocationReportDAO;
-import is203.se.Entity.LocationReport;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.text.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author randa
  */
-public class PopularPlacesServlet extends HttpServlet {
+@WebServlet(name = "NewServlet", urlPatterns = {"/NewServlet"})
+public class NewServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,30 +28,22 @@ public class PopularPlacesServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * @throws java.text.ParseException
-     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, ParseException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-
-        LocationReportDAO locReportDao = new LocationReportDAO();
-
-        String datetime = request.getParameter("datetime");
-        String kValue = request.getParameter("k");
-
         try (PrintWriter out = response.getWriter()) {
-            
-            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
-            Date date = (Date) formatter.parse(datetime);
-
-            ArrayList<LocationReport> locReportList = locReportDao.retrieveLocationReportByDate(date);
-            out.println(locReportList);
-            for (LocationReport r : locReportList) {
-                out.println(r.getLocationId());
-            }
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet NewServlet</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet NewServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -71,14 +57,8 @@ public class PopularPlacesServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, NullPointerException {
-        try {
-            processRequest(request, response);
-        } catch (ParseException ex) {
-            Logger.getLogger(PopularPlacesServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(PopularPlacesServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+            throws ServletException, IOException {
+        processRequest(request, response);
     }
 
     /**
@@ -92,13 +72,7 @@ public class PopularPlacesServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (ParseException ex) {
-            Logger.getLogger(PopularPlacesServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(PopularPlacesServlet.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
