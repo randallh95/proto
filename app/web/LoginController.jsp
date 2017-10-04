@@ -13,7 +13,6 @@
     String username = request.getParameter("username");
     String enteredPassword = request.getParameter("pwd");
 
-
     // Checking for null and empty strings in username and password field
     if (username == null || username.trim().equals("")) {
 %>
@@ -32,7 +31,7 @@
     }
 
     User user = userDAO.retrieve(username);
-    // user will be null is username is invalid
+    // user will be null if username is invalid
     if (user == null || !user.validateUser(enteredPassword)) {
 %>
 <jsp:forward page="LoginUI.jsp">
@@ -41,7 +40,8 @@
 <%
     } else {
         session.setAttribute("user", user);
-        response.sendRedirect("Home.jsp");    }
+        response.sendRedirect("Home.jsp");
+    }
 
 
 %>

@@ -1,17 +1,52 @@
 <%-- 
-    Document   : PopularPlaces
-    Created on : 19 Sep, 2017, 5:16:17 PM
-    Author     : Ashley Tan
+    Document   : TopPopularPlacesUI
+    Created on : 4 Oct, 2017, 12:01:39 PM
+    Author     : Randall
 --%>
-
+<%@page import="java.util.ArrayList"%>
+<%@page import="is203.se.DAO.LocationDAO"%>
 <%@ include file="Protect.jsp" %> 
+
 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Top Popular Places</title>
+        <!-- Bootstrap core CSS -->
+        <link href="style/css/bootstrap.min.css" rel="stylesheet">
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <div class="container">
+            <div class="starter-template">
+                <h1 class="text-center">Top Popular Places</h1>
+            </div>
+
+            <form method="GET" action="PopularPlacesServlet">
+                <!-- Choosing Top K -->
+                <div class="form-group">
+                    <label for="k">Top-K</label>
+                    <select id = "k" class="form-control">
+                        <% for (int i = 1; i <= 10; i++) {
+                                if (i == 3) {
+                                    out.println("<option selected='selected' value='" + i + "'>" + i + "</option>");
+                                } else {
+                                    out.println("<option value='" + i + "'>" + i + "</option>");
+                                }
+                            }
+                        %>
+                    </select>
+                </div>
+                
+                <!-- Choosing DateTime -->
+                <div class="form-group">
+                    <label for="datetime">Datetime</label>
+                    <input type="datetime-local" name="datetime">
+                </div>  
+                
+                <!-- Submit and reset -->
+                <button type="submit" class="btn btn-default">Submit</button>
+                <button type="reset" class="btn btn-default">Reset</button>
+            </form>
+        </div>
     </body>
 </html>
