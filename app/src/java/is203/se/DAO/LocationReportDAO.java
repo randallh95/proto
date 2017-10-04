@@ -114,9 +114,10 @@ public class LocationReportDAO {
         ResultSet rs = ps.executeQuery();
         
         while(rs.next()) {
-            int locationID = rs.getInt(1);
+            Date date = rs.getDate(1);
             String macAddress = rs.getString(2);
-            Date date = rs.getDate(3);
+            int locationID = rs.getInt(3);
+            
             outputList.add(new LocationReport(locationID, macAddress, date));
         }
         
