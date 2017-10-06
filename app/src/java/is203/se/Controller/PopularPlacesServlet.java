@@ -16,6 +16,7 @@ import java.text.*;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,51 +47,46 @@ public class PopularPlacesServlet extends HttpServlet {
 
         String datetime = request.getParameter("datetime");
         String kValue = request.getParameter("k");
-        
+
         try (PrintWriter out = response.getWriter()) {
-            
+
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
             Date date = (Date) formatter.parse(datetime);
             // Retrieving list of LocationReport
             ArrayList<LocationReport> locReportList = locReportDao.retrieveLocationReportByDate(date);
-            
-            // Creating a map of locationIDs and their counts
-            Map<Long, Integer> locMap = new HashMap<>();
-            locReportList.stream().map((r) -> r.getLocationId()).forEachOrdered((locID) -> {
-                Integer count = locMap.get(locID);
-                if(count == null){
-                    locMap.put(locID, 1);
-                } else {
-                    locMap.put(locID, count + 1);
-                }
-            });
-            
-            // Printing for testing
-            locMap.forEach((k,v) -> out.println("key: "+k+" value:"+v+"</br>"));
-            
+
+            // Getting the whole list of locations
             LocationDAO locDao = new LocationDAO();
-            ArrayList<Location> locList = locDao.retrieveAllLocations();
-            
+            List<Location> locList = locDao.retrieveAllLocations();
+
+            // New Map of semantic place and it's density
             Map<String, Integer> semanticMap = new HashMap<>();
-            semanticMap.forEach((k,v) -> {
-                for(Location loc:locList){
-                    locMap.forEach((key,value)->{
-                        
-                    });
-                    String semanticPlace = loc.getSemanticPlace();
-                    
+            for (Location loc : locList) {
+                for (LocationReport locReport : locReportList) {
+                    Long locID = locReport.getLocationId();
+
+                    if (loc.getLocationId() == locID) {
+                        String semanticName = loc.getSemanticPlace();
+                        Integer count = semanticMap.get(semanticName);
+
+                        if (count == null) {
+                            semanticMap.put(semanticName, 1);
+                        } else {
+                            semanticMap.put(semanticName, count + 1);
+                        }
+                    }
                 }
-                //Integer count = semanticMap.get(k)
-            });
-            
-            
+            }
+            request.setAttribute("map", semanticMap);
+            RequestDispatcher view = request.getRequestDispatcher("PopularPlaces.jsp");
+            view.forward(request, response);
             
             
         }
 
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -104,10 +100,14 @@ public class PopularPlacesServlet extends HttpServlet {
             throws ServletException, IOException, NullPointerException {
         try {
             processRequest(request, response);
+
         } catch (ParseException ex) {
-            Logger.getLogger(PopularPlacesServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PopularPlacesServlet.class
+                    .getName()).log(Level.SEVERE, null, ex);
+
         } catch (SQLException ex) {
-            Logger.getLogger(PopularPlacesServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PopularPlacesServlet.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -124,10 +124,14 @@ public class PopularPlacesServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+
         } catch (ParseException ex) {
-            Logger.getLogger(PopularPlacesServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PopularPlacesServlet.class
+                    .getName()).log(Level.SEVERE, null, ex);
+
         } catch (SQLException ex) {
-            Logger.getLogger(PopularPlacesServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PopularPlacesServlet.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

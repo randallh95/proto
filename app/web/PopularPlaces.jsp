@@ -3,6 +3,8 @@
     Created on : 4 Oct, 2017, 12:01:39 PM
     Author     : Randall
 --%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="is203.se.DAO.LocationDAO"%>
 <%@ include file="Protect.jsp" %> 
@@ -36,17 +38,22 @@
                         %>
                     </select>
                 </div>
-                
+
                 <!-- Choosing DateTime -->
                 <div class="form-group">
                     <label for="datetime">Datetime</label>
                     <input type="datetime-local" step="1" name="datetime">
                 </div>  
-                
+
                 <!-- Submit and reset -->
                 <button type="submit" class="btn btn-default">Submit</button>
                 <button type="reset" class="btn btn-default">Reset</button>
             </form>
         </div>
+        <%
+            Object semanticMapObj = request.getAttribute("map");
+            HashMap<String, Integer> semanticMap = (HashMap<String, Integer>) semanticMapObj;
+
+        %>
     </body>
 </html>
