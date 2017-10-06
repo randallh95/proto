@@ -22,7 +22,7 @@
             }
         %>
         <%=errorMsg%>
-        <form action='LoginController.jsp' method='post'>
+        <form action='LoginController.jsp' method='get'>
             <table>
                 <tr>
                     <td>

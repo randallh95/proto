@@ -100,6 +100,8 @@ public class LocationDAO {
         }
         return result;
     }
+    
+    
 
     public ArrayList<Location> retrieveLocationsByFloor(int floor) throws SQLException {
         ArrayList<Location> semList = new ArrayList<>();

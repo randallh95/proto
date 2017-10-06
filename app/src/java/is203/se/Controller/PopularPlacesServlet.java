@@ -5,14 +5,15 @@
  */
 package is203.se.Controller;
 
+import is203.se.DAO.LocationDAO;
 import is203.se.DAO.LocationReportDAO;
+import is203.se.Entity.Location;
 import is203.se.Entity.LocationReport;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.*;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -45,17 +46,46 @@ public class PopularPlacesServlet extends HttpServlet {
 
         String datetime = request.getParameter("datetime");
         String kValue = request.getParameter("k");
-
+        
         try (PrintWriter out = response.getWriter()) {
             
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
             Date date = (Date) formatter.parse(datetime);
-
+            // Retrieving list of LocationReport
             ArrayList<LocationReport> locReportList = locReportDao.retrieveLocationReportByDate(date);
-            out.println(locReportList);
-            for (LocationReport r : locReportList) {
-                out.println(r.getLocationId());
-            }
+            
+            // Creating a map of locationIDs and their counts
+            Map<Long, Integer> locMap = new HashMap<>();
+            locReportList.stream().map((r) -> r.getLocationId()).forEachOrdered((locID) -> {
+                Integer count = locMap.get(locID);
+                if(count == null){
+                    locMap.put(locID, 1);
+                } else {
+                    locMap.put(locID, count + 1);
+                }
+            });
+            
+            // Printing for testing
+            locMap.forEach((k,v) -> out.println("key: "+k+" value:"+v+"</br>"));
+            
+            LocationDAO locDao = new LocationDAO();
+            ArrayList<Location> locList = locDao.retrieveAllLocations();
+            
+            Map<String, Integer> semanticMap = new HashMap<>();
+            semanticMap.forEach((k,v) -> {
+                for(Location loc:locList){
+                    locMap.forEach((key,value)->{
+                        
+                    });
+                    String semanticPlace = loc.getSemanticPlace();
+                    
+                }
+                //Integer count = semanticMap.get(k)
+            });
+            
+            
+            
+            
         }
 
     }
