@@ -49,11 +49,34 @@
                 <button type="submit" class="btn btn-default">Submit</button>
                 <button type="reset" class="btn btn-default">Reset</button>
             </form>
-        </div>
-        <%
-            Object semanticMapObj = request.getAttribute("map");
-            HashMap<String, Integer> semanticMap = (HashMap<String, Integer>) semanticMapObj;
 
-        %>
+            <%
+                Object semanticMapObj = request.getAttribute("map");
+                HashMap<String, Integer> semanticMap = (HashMap<String, Integer>) semanticMapObj;
+                if (semanticMap != null) {
+            %>
+            <div class="col-md-6">
+                <table class="table table-condensed text-center">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Semantic Place</th>
+                            <th>Count</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <%
+                }
+            %>
+        </div>
+
     </body>
 </html>
