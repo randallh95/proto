@@ -49,9 +49,10 @@ public class PopularPlacesServlet extends HttpServlet {
         String kValue = request.getParameter("k");
 
         try (PrintWriter out = response.getWriter()) {
+            System.out.println(datetime);
+            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 
-            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss");
-            Date date = (Date) formatter.parse(datetime);
+            Date date = formatter.parse(datetime);
             // Retrieving list of LocationReport
             ArrayList<LocationReport> locReportList = locReportDao.retrieveLocationReportByDate(date);
 
@@ -78,6 +79,7 @@ public class PopularPlacesServlet extends HttpServlet {
                 }
             }
             request.setAttribute("map", semanticMap);
+            
             RequestDispatcher view = request.getRequestDispatcher("PopularPlaces.jsp");
             view.forward(request, response);
             

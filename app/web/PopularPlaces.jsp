@@ -54,6 +54,7 @@
                 Object semanticMapObj = request.getAttribute("map");
                 HashMap<String, Integer> semanticMap = (HashMap<String, Integer>) semanticMapObj;
                 if (semanticMap != null) {
+                    out.println(semanticMap);
             %>
             <div class="col-md-6">
                 <table class="table table-condensed text-center">

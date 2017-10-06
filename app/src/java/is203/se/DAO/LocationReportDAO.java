@@ -107,18 +107,19 @@ public class LocationReportDAO {
         ArrayList<LocationReport> outputList = new ArrayList<>();
         Timestamp timestamp = new Timestamp(dateTime.getTime());
         
-        String sql = "select * from location_report where time_stamp = ?";
+        String sql = "select * from location_report where time_stamp between ? - interval '15' minute and ?";
         PreparedStatement ps = conn.prepareStatement(sql);
         ps.setString(1, "" + timestamp);
+        ps.setString(2, "" + timestamp);
         
         ResultSet rs = ps.executeQuery();
         
         while(rs.next()) {
-            Date date = rs.getDate(1);
+            Timestamp timestamps = rs.getTimestamp(1);
             String macAddress = rs.getString(2);
             int locationID = rs.getInt(3);
-            
-            outputList.add(new LocationReport(locationID, macAddress, date));
+            System.out.println(rs.getTimestamp(1));
+            outputList.add(new LocationReport(locationID, macAddress, timestamps));
         }
         
         return outputList;
