@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.*;
 import java.util.*;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -46,47 +47,47 @@ public class PopularPlacesServlet extends HttpServlet {
         LocationReportDAO locReportDao = new LocationReportDAO();
 
         String datetime = request.getParameter("datetime");
-        String kValue = request.getParameter("k");
+        int kValue = Integer.parseInt(request.getParameter("k"));
 
         try (PrintWriter out = response.getWriter()) {
-            System.out.println(datetime);
+
             DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-
-            Date date = formatter.parse(datetime);
-            // Retrieving list of LocationReport
-            ArrayList<LocationReport> locReportList = locReportDao.retrieveLocationReportByDate(date);
-
-            // Getting the whole list of locations
-            LocationDAO locDao = new LocationDAO();
-            List<Location> locList = locDao.retrieveAllLocations();
-
-            // New Map of semantic place and it's density
-            Map<String, Integer> semanticMap = new HashMap<>();
-            for (Location loc : locList) {
-                for (LocationReport locReport : locReportList) {
-                    Long locID = locReport.getLocationId();
-
-                    if (loc.getLocationId() == locID) {
-                        String semanticName = loc.getSemanticPlace();
-                        Integer count = semanticMap.get(semanticName);
-
-                        if (count == null) {
-                            semanticMap.put(semanticName, 1);
-                        } else {
-                            semanticMap.put(semanticName, count + 1);
-                        }
-                    }
-                }
+            if (datetime.length() == 16) {
+                datetime += ":00";
             }
-            request.setAttribute("map", semanticMap);
+            System.out.println(datetime);
+            Date date = formatter.parse(datetime);
             
+            // Retrieving list of LocationReport
+            HashMap<String, Integer> semanticMapBeforeSorting = locReportDao.retrieveLocationReportByDateAndRank(date, kValue);
+            
+            // Begin the sorting process
+            Set<Entry<String, Integer>> semanticSetBeforeSorting = semanticMapBeforeSorting.entrySet();
+            List<Entry<String, Integer>> listOfEntries = new ArrayList<Entry<String, Integer>>(semanticSetBeforeSorting);
+            Collections.sort(listOfEntries, valueComparator);
+            LinkedHashMap<String, Integer> sortedByValue = new LinkedHashMap<>(listOfEntries.size());
+
+            // copying entries from list to map
+            for (Entry<String, Integer> entry : listOfEntries) {
+                sortedByValue.put(entry.getKey(), entry.getValue());
+            }
+            
+            request.setAttribute("semanticMap", sortedByValue);
             RequestDispatcher view = request.getRequestDispatcher("PopularPlaces.jsp");
             view.forward(request, response);
-            
-            
+
         }
 
     }
+
+    Comparator<Entry<String, Integer>> valueComparator = new Comparator<Entry<String, Integer>>() {
+        @Override
+        public int compare(Entry<String, Integer> e1, Entry<String, Integer> e2) {
+            Integer v1 = e1.getValue();
+            Integer v2 = e2.getValue();
+            return v2.compareTo(v1);
+        }
+    };
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -98,6 +99,7 @@ public class PopularPlacesServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, NullPointerException {
         try {

@@ -3,6 +3,9 @@
     Created on : 4 Oct, 2017, 12:01:39 PM
     Author     : Randall
 --%>
+<%@page import="java.util.Map.Entry"%>
+<%@page import="java.util.LinkedHashMap"%>
+<%@page import="java.util.Set"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.ArrayList"%>
@@ -51,10 +54,13 @@
             </form>
 
             <%
-                Object semanticMapObj = request.getAttribute("map");
-                HashMap<String, Integer> semanticMap = (HashMap<String, Integer>) semanticMapObj;
+                Object semanticMapObj = request.getAttribute("semanticMap");
+                LinkedHashMap<String, Integer> semanticMap = (LinkedHashMap<String, Integer>) semanticMapObj;
+
                 if (semanticMap != null) {
-                    out.println(semanticMap);
+                    Set<Entry<String, Integer>> entrySetSortedByValue = semanticMap.entrySet();
+                    int count = 1;
+
             %>
             <div class="col-md-6">
                 <table class="table table-condensed text-center">
@@ -66,11 +72,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                        </tr>
+                        <%for (Entry<String, Integer> mapping : entrySetSortedByValue) {
+                                out.println("<tr>");
+                                out.println("<th scope=\"row\">" + count + "</td>");
+                                out.println("<td>" + mapping.getKey() + "</td>");
+                                out.println("<td>" + mapping.getValue() + "</td>");
+                                out.println("</tr>");
+                                count++;
+                            }
+                        %>
                     </tbody>
                 </table>
             </div>
