@@ -9,14 +9,9 @@ package is203.se.Controller;
  *
  * @author JunMing
  */
-import is203.se.Entity.Heatmap;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -26,7 +21,6 @@ public class HeatmapController extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
-        Heatmap heatMap = new Heatmap();
 
         //Retrieve values from HeatmapUI.jsp
         String dateStr = request.getParameter("date_time");

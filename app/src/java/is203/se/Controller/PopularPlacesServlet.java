@@ -53,9 +53,10 @@ public class PopularPlacesServlet extends HttpServlet {
             }
             System.out.println(datetime);
             Date date = formatter.parse(datetime);
-            
+
             // Retrieving list of LocationReport
             HashMap<String, Integer> semanticMapBeforeSorting = locReportDao.retrieveLocationReportByDateAndRank(date, kValue);
+
             
             // Begin the sorting process
             Set<Map.Entry<String, Integer>> semanticSetBeforeSorting = semanticMapBeforeSorting.entrySet();
@@ -67,17 +68,17 @@ public class PopularPlacesServlet extends HttpServlet {
             for (Map.Entry<String, Integer> entry : listOfEntries) {
                 sortedByValue.put(entry.getKey(), entry.getValue());
             }
-            
+
             request.setAttribute("semanticMap", sortedByValue);
             RequestDispatcher view = request.getRequestDispatcher("TopPopularPlacesUI.jsp");
             view.forward(request, response);
 
-        } catch (ParseException parseException){
+        } catch (ParseException parseException) {
             parseException.printStackTrace();
         }
 
     }
-    
+
     Comparator<Map.Entry<String, Integer>> valueComparator = new Comparator<Map.Entry<String, Integer>>() {
         @Override
         public int compare(Map.Entry<String, Integer> e1, Map.Entry<String, Integer> e2) {

@@ -85,7 +85,9 @@
                 </table>
             </div>
             <%
-                }
+                } else if(semanticMap.isEmpty()){
+                out.println("<p> Try again! </p>");
+}
             %>
         </div>
 
