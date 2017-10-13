@@ -1,18 +1,24 @@
+package is203.se.Entity;
+
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package is203.se.Entity;
-
-import java.util.Date;
 
 /**
  *
  * @author Bernice
  */
 public class Interval {
-    private long locationId;
+
+    private String startLocationId;
+    private String endLocationId;
     private Date startTime;
     private Date endTime;
     private long duration;
@@ -21,8 +27,9 @@ public class Interval {
         
     }
     
-    public Interval(long locationId, Date startTime, Date endTime){
-        this.locationId = locationId;
+    public Interval(String startLocationId, String endLocationId, Date startTime, Date endTime){
+        this.startLocationId = startLocationId;
+        this.endLocationId = endLocationId;
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -31,8 +38,8 @@ public class Interval {
         Date tempStartTime = new Date();
         Date tempEndTime = new Date();
         Interval interval = null;
-
-        if(locationId == inputInterval.locationId){
+            System.out.println("in here 0 s1 = " + startLocationId + ", s2 = " + inputInterval.startLocationId + ", e1 = " + endLocationId + ", e2 = " + inputInterval.endLocationId);
+        if(startLocationId.equals(inputInterval.startLocationId) && endLocationId.equals(inputInterval.endLocationId)){
             //if startTime of interval 1 is < inputInterval.endTime (before)
             //if endTime of interval 1 is > inputInterval.endTime (after)
             //if endTime of interval 1 is = inputInterval.endTime (equals)
@@ -70,8 +77,44 @@ public class Interval {
                     tempEndTime = endTime;
                 }
             }
+            //S2 E1-E2/E2
+//            else if(inputInterval.startTime.before(endTime) && (inputInterval.endTime.after(endTime) || inputInterval.endTime.equals(endTime))){
+//                //if startTime of interval 1 is < inputInterval.startTime (before)
+//                //if startTime of interval 1 is = inputInterval.startTime (equals)
+//                //S1/S2-S1 E1-E2/E2
+//                if(startTime.before(inputInterval.startTime) || startTime.equals(inputInterval.startTime)){
+//                    tempStartTime = inputInterval.startTime;
+//                    tempEndTime = endTime;
+//                }
+//                //if startTime of interval 1 is > inputInterval.startTime (after)
+//                //S2 S1 E1-E2/E2
+//                else{
+//                    tempStartTime = startTime;
+//                    tempEndTime = endTime;
+//                }
+//            }
+//            //if startTime of interval 1 is < inputInterval.endTime (before)
+//            //if endTime of interval 1 is < inputInterval.endTime (before)
+//            //S2 E2 E1
+//            else if(inputInterval.startTime.before(endTime) && inputInterval.endTime.before(endTime)){
+//                //if startTime of interval 1 is < inputInterval.startTime (before)
+//                //if startTime of interval 1 is = inputInterval.startTime (equals)
+//                //S2-S1/S1 E2 E1
+//                if(inputInterval.startTime.before(startTime) || inputInterval.startTime.equals(startTime)){
+//                    tempStartTime = startTime;
+//                    tempEndTime = inputInterval.endTime;
+//                }
+//                //if startTime of interval 1 is > inputInterval.startTime (after)
+//                //S2 S1 E2 E1
+//                else{ 
+//                    tempStartTime = startTime;
+//                    tempEndTime = inputInterval.endTime;
+//                }
+//            }
+            
             if(tempStartTime != null && tempEndTime != null){
-                interval = new Interval(locationId, tempStartTime, tempEndTime);
+                interval = new Interval(startLocationId, endLocationId, tempStartTime, tempEndTime);
+                interval.setDuration(tempEndTime.getTime()-tempStartTime.getTime());
             }
         }
         return interval;
@@ -79,7 +122,7 @@ public class Interval {
     
     public boolean equals(Interval interval){
         boolean isEquals = false;
-        if(locationId == interval.locationId){
+        if(startLocationId.equals(interval.startLocationId) && endLocationId.equals(interval.endLocationId)){
             if(startTime.equals(interval.startTime) && endTime.equals(interval.endTime)){
                 isEquals = true;
                 return isEquals;
@@ -88,12 +131,20 @@ public class Interval {
         return isEquals;
     }
     
-    public long getLocationId() {
-        return locationId;
+    public String getStartLocationId() {
+        return startLocationId;
     }
 
-    public void setLocationId(long locationId) {
-        this.locationId = locationId;
+    public void setStartLocationId(String startLocationId) {
+        this.startLocationId = startLocationId;
+    }
+    
+    public String getEndLocationId() {
+        return endLocationId;
+    }
+
+    public void setEndLocationId(String endLocationId) {
+        this.endLocationId = endLocationId;
     }
 
     public Date getStartTime() {
@@ -111,13 +162,12 @@ public class Interval {
     public void setEndTime(Date endTime) {
         this.endTime = endTime;
     }
-    
-    public long calculateDuration(){
-        return endTime.getTime() - startTime.getTime();
+
+    public long getDuration() {
+        return duration;
     }
-    
-    @Override
-    public String toString() {
-        return "Interval{" + "locationId =" + locationId + ", startTime = " + startTime + ", endTime = " + endTime + ", duration = " + duration + '}';
-    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }    
 }

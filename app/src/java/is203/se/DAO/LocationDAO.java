@@ -12,7 +12,6 @@ import static java.sql.JDBCType.BIGINT;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,37 +30,6 @@ public class LocationDAO {
             conn.setAutoCommit(false);
         } catch (SQLException ex) {
             Logger.getLogger(LocationDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    
-    public void loadDataInfile(String absoluteFilePath) {
-        String sql = "LOAD DATA LOCAL INFILE '" + absoluteFilePath + "' INTO TABLE location\n"
-                + "FIELDS TERMINATED BY ',' \n"
-                + "ENCLOSED BY '\"' \n"
-                + "LINES TERMINATED BY '\\n';";
-        try (Statement stmt  = conn.createStatement()) {
-            stmt.execute(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(LocationReportDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    public ArrayList<Long> retrieveLocationIdsForSpecifiedSemanticPlace(String semanticPlace) {
-        ArrayList<Long> result = new ArrayList<>();
-        String sql = "SELECT location_id FROM `location` WHERE semantic_place = ?";
-
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setString(1, semanticPlace);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                long locationId = rs.getLong("location_id");
-                result.add(locationId);
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(LocationDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            return result;
         }
     }
 
@@ -86,28 +54,21 @@ public class LocationDAO {
         return result;
     }
 
-    public ArrayList<Location> retrieveAllLocations() {
+    public ArrayList<Location> retrieveAllLocations() throws SQLException {
+        String sql = "select * from location";
         ArrayList<Location> locationArrList = new ArrayList<>();
-        try {
-            String sql = "select * from location";
-            
 
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
+        PreparedStatement ps = conn.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-                long locationId = rs.getLong("location_id");
-                String semanticPlace = rs.getString("semantic_place");
-                Location location = new Location(locationId, semanticPlace);
-                locationArrList.add(location);
-            }
-            ps.close();
-            return locationArrList;
-        } catch (SQLException ex) {
-            Logger.getLogger(LocationDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            return locationArrList;
+        while (rs.next()) {
+            long locationId = rs.getLong("location_id");
+            String semanticPlace = rs.getString("semantic_place");
+            Location location = new Location(locationId, semanticPlace);
+            locationArrList.add(location);
         }
+        ps.close();
+        return locationArrList;
     }
 
     public int retrieveLocation(String locationId) throws SQLException {
@@ -125,21 +86,44 @@ public class LocationDAO {
         return num;
     }
 
-    public String retrieveSemanticPlace(long locationId) throws SQLException {
-        String semanticPlace = "";
-        String sql = "select semantic_place from location where location_id = ?";
-        
+    public ArrayList<String> retrieveSemanticPlaces() {
+        String sql = "SELECT DISTINCT semantic_place from location";
+        ArrayList<String> result = new ArrayList<>();
+
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, locationId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                semanticPlace = rs.getString("semantic_place");
+                result.add(rs.getString(1));
             }
         } catch (SQLException ex) {
             Logger.getLogger(LocationDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return result;
+    }
+    
+    
 
-        return semanticPlace;
+    public ArrayList<Location> retrieveLocationsByFloor(int floor) throws SQLException {
+        ArrayList<Location> semList = new ArrayList<>();
+        String floorString = String.valueOf(floor);
+        System.out.println(floorString);
+        String sql = "select * from location where semantic_place like ?";
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+        if (floor == 0) {
+            ps.setString(1, "%B1%");
+        } else {
+            ps.setString(1, "%L" + floorString + "%");
+        }
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()) {
+            long locationId = rs.getLong("location_id");
+            String semanticPlace = rs.getString("semantic_place");
+            semList.add(new Location(locationId, semanticPlace));
+        }
+
+        return semList;
     }
 
     public int updateLocations(long locationId, String semanticPlace) throws SQLException {

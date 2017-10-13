@@ -5,14 +5,16 @@
  */
 package is203.se.Controller;
 
+import is203.se.DAO.LocationDAO;
 import is203.se.DAO.LocationReportDAO;
+import is203.se.Entity.Location;
+import is203.se.Entity.LocationReport;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.text.*;
 import java.util.*;
+import java.util.Map.Entry;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -23,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Randall
+ * @author randa
  */
 public class PopularPlacesServlet extends HttpServlet {
 
@@ -35,9 +37,11 @@ public class PopularPlacesServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
+     * @throws java.text.ParseException
+     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException, ParseException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
 
         LocationReportDAO locReportDao = new LocationReportDAO();
@@ -59,36 +63,43 @@ public class PopularPlacesServlet extends HttpServlet {
 
             
             // Begin the sorting process
-            Set<Map.Entry<String, Integer>> semanticSetBeforeSorting = semanticMapBeforeSorting.entrySet();
-            List<Map.Entry<String, Integer>> listOfEntries = new ArrayList<>(semanticSetBeforeSorting);
+            Set<Entry<String, Integer>> semanticSetBeforeSorting = semanticMapBeforeSorting.entrySet();
+            List<Entry<String, Integer>> listOfEntries = new ArrayList<Entry<String, Integer>>(semanticSetBeforeSorting);
             Collections.sort(listOfEntries, valueComparator);
             LinkedHashMap<String, Integer> sortedByValue = new LinkedHashMap<>(listOfEntries.size());
 
             // copying entries from list to map
-            for (Map.Entry<String, Integer> entry : listOfEntries) {
+            for (Entry<String, Integer> entry : listOfEntries) {
                 sortedByValue.put(entry.getKey(), entry.getValue());
             }
 
             request.setAttribute("semanticMap", sortedByValue);
-            RequestDispatcher view = request.getRequestDispatcher("TopPopularPlacesUI.jsp");
+            RequestDispatcher view = request.getRequestDispatcher("PopularPlaces.jsp");
             view.forward(request, response);
 
+<<<<<<< HEAD
         } catch (ParseException parseException) {
             parseException.printStackTrace();
+=======
+>>>>>>> parent of 05e94af... What a commit #2
         }
 
     }
 
+<<<<<<< HEAD
     Comparator<Map.Entry<String, Integer>> valueComparator = new Comparator<Map.Entry<String, Integer>>() {
+=======
+    Comparator<Entry<String, Integer>> valueComparator = new Comparator<Entry<String, Integer>>() {
+>>>>>>> parent of 05e94af... What a commit #2
         @Override
-        public int compare(Map.Entry<String, Integer> e1, Map.Entry<String, Integer> e2) {
+        public int compare(Entry<String, Integer> e1, Entry<String, Integer> e2) {
             Integer v1 = e1.getValue();
             Integer v2 = e2.getValue();
             return v2.compareTo(v1);
         }
     };
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+// <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -98,12 +109,19 @@ public class PopularPlacesServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, NullPointerException {
         try {
             processRequest(request, response);
+
+        } catch (ParseException ex) {
+            Logger.getLogger(PopularPlacesServlet.class
+                    .getName()).log(Level.SEVERE, null, ex);
+
         } catch (SQLException ex) {
-            Logger.getLogger(PopularPlacesServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PopularPlacesServlet.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -120,8 +138,14 @@ public class PopularPlacesServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             processRequest(request, response);
+
+        } catch (ParseException ex) {
+            Logger.getLogger(PopularPlacesServlet.class
+                    .getName()).log(Level.SEVERE, null, ex);
+
         } catch (SQLException ex) {
-            Logger.getLogger(PopularPlacesServlet.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PopularPlacesServlet.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -1,5 +1,6 @@
 package is203.se.Entity;
 
+
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -14,15 +15,16 @@ import java.util.logging.Logger;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 /**
  *
  * @author Bernice
  */
 public class TestCase2 {
-
+    
     private static ArrayList<User> userArrList;
-
-    public static void testUseCases() {
+    
+    public static void testUseCases(){
         userArrList = new ArrayList<User>();
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
         try {
@@ -35,26 +37,26 @@ public class TestCase2 {
             User user = new User("mac1", "Bob", "BobPassword1", "bob.tay.2016@soa.smu.edu.sg", 'M');
             ArrayList<Interval> intervalArrList = new ArrayList<Interval>();
 
-            Interval interval = new Interval("loc1", new Timestamp(startTime), new Timestamp(endTime));
+            Interval interval = new Interval("loc1", "loc1", new Timestamp(startTime), new Timestamp(endTime));
             intervalArrList.add(interval);
 
             startDate = dateFormat.parse("12/09/2017 12:09:00");
             startTime = startDate.getTime();
             endDate = dateFormat.parse("12/09/2017 12:13:59");
             endTime = endDate.getTime();
-            interval = new Interval("loc2", new Timestamp(startTime), new Timestamp(endTime));
+            interval = new Interval("loc2", "loc2", new Timestamp(startTime), new Timestamp(endTime));
             intervalArrList.add(interval);
 
             startDate = dateFormat.parse("12/09/2017 12:14:00");
             startTime = startDate.getTime();
             endDate = dateFormat.parse("12/09/2017 12:25:59");
             endTime = endDate.getTime();
-            interval = new Interval("loc3", new Timestamp(startTime), new Timestamp(endTime));
+            interval = new Interval("loc3", "loc3", new Timestamp(startTime), new Timestamp(endTime));
             intervalArrList.add(interval);
-
+            
             user.setIntervalArrList(intervalArrList);
             userArrList.add(user);
-
+            
             //User2
             user = new User("mac2", "Amy", "AmyPassword1", "amy.choi.2016@sob.smu.edu.sg", 'F');
             intervalArrList = new ArrayList<Interval>();
@@ -63,26 +65,26 @@ public class TestCase2 {
             startTime = startDate.getTime();
             endDate = dateFormat.parse("12/09/2017 12:08:59");
             endTime = endDate.getTime();
-            interval = new Interval("loc1", new Timestamp(startTime), new Timestamp(endTime));
+            interval = new Interval("loc1", "loc1", new Timestamp(startTime), new Timestamp(endTime));
             intervalArrList.add(interval);
 
             startDate = dateFormat.parse("12/09/2017 12:09:00");
             startTime = startDate.getTime();
             endDate = dateFormat.parse("12/09/2017 12:13:59");
             endTime = endDate.getTime();
-            interval = new Interval("loc2", new Timestamp(startTime), new Timestamp(endTime));
+            interval = new Interval("loc2", "loc2", new Timestamp(startTime), new Timestamp(endTime));
             intervalArrList.add(interval);
 
             startDate = dateFormat.parse("12/09/2017 12:14:00");
             startTime = startDate.getTime();
             endDate = dateFormat.parse("12/09/2017 12:25:59");
             endTime = endDate.getTime();
-            interval = new Interval("loc3", new Timestamp(startTime), new Timestamp(endTime));
+            interval = new Interval("loc3", "loc3", new Timestamp(startTime), new Timestamp(endTime));
             intervalArrList.add(interval);
-
+            
             user.setIntervalArrList(intervalArrList);
             userArrList.add(user);
-
+            
             //User3
             user = new User("mac3", "Trinity", "TrinityPassword1", "Trinity.tan.2016@sob.smu.edu.sg", 'F');
             intervalArrList = new ArrayList<Interval>();
@@ -91,19 +93,19 @@ public class TestCase2 {
             startTime = startDate.getTime();
             endDate = dateFormat.parse("12/09/2017 12:13:59");
             endTime = endDate.getTime();
-            interval = new Interval("loc3", new Timestamp(startTime), new Timestamp(endTime));
+            interval = new Interval("loc3", "loc3", new Timestamp(startTime), new Timestamp(endTime));
             intervalArrList.add(interval);
 
             startDate = dateFormat.parse("12/09/2017 12:14:00");
             startTime = startDate.getTime();
             endDate = dateFormat.parse("12/09/2017 12:25:59");
             endTime = endDate.getTime();
-            interval = new Interval("loc4", new Timestamp(startTime), new Timestamp(endTime));
+            interval = new Interval("loc4", "loc4", new Timestamp(startTime), new Timestamp(endTime));
             intervalArrList.add(interval);
-
+            
             user.setIntervalArrList(intervalArrList);
             userArrList.add(user);
-
+            
             //User4
             user = new User("mac4", "Joel", "JoelPassword1", "Joel.choi.2016@sob.smu.edu.sg", 'M');
             intervalArrList = new ArrayList<Interval>();
@@ -112,19 +114,19 @@ public class TestCase2 {
             startTime = startDate.getTime();
             endDate = dateFormat.parse("12/09/2017 12:15:59");
             endTime = endDate.getTime();
-            interval = new Interval("loc3", new Timestamp(startTime), new Timestamp(endTime));
+            interval = new Interval("loc3", "loc3", new Timestamp(startTime), new Timestamp(endTime));
             intervalArrList.add(interval);
 
             startDate = dateFormat.parse("12/09/2017 12:16:00");
             startTime = startDate.getTime();
             endDate = dateFormat.parse("12/09/2017 12:25:59");
             endTime = endDate.getTime();
-            interval = new Interval("loc4", new Timestamp(startTime), new Timestamp(endTime));
+            interval = new Interval("loc4", "loc4", new Timestamp(startTime), new Timestamp(endTime));
             intervalArrList.add(interval);
-
+            
             user.setIntervalArrList(intervalArrList);
             userArrList.add(user);
-
+            
             //User5
             user = new User("mac5", "Samuel", "SamuelPassword1", "Samuel.choi.2016@sob.smu.edu.sg", 'M');
             intervalArrList = new ArrayList<Interval>();
@@ -133,190 +135,192 @@ public class TestCase2 {
             startTime = startDate.getTime();
             endDate = dateFormat.parse("12/09/2017 12:09:59");
             endTime = endDate.getTime();
-            interval = new Interval("loc1", new Timestamp(startTime), new Timestamp(endTime));
+            interval = new Interval("loc1", "loc1", new Timestamp(startTime), new Timestamp(endTime));
             intervalArrList.add(interval);
 
             startDate = dateFormat.parse("12/09/2017 12:10:00");
             startTime = startDate.getTime();
             endDate = dateFormat.parse("12/09/2017 12:15:59");
             endTime = endDate.getTime();
-            interval = new Interval("loc3", new Timestamp(startTime), new Timestamp(endTime));
+            interval = new Interval("loc3", "loc3", new Timestamp(startTime), new Timestamp(endTime));
             intervalArrList.add(interval);
-
+            
             user.setIntervalArrList(intervalArrList);
             userArrList.add(user);
-
+            
         } catch (ParseException ex) {
             Logger.getLogger(TestCase2.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-    public static void main(String[] args) {
-
+    
+    public static void main(String[] args){
+        
         testUseCases();
-
+        
         Date prevEndTime = null;
-        long intervalDuration = 0;
+        long duration = 0;
         int userIndex1 = 0;
         int userIndex2 = 0;
         int counter = 0;
-        int maxUserIndex = userArrList.size() - 1;
+        int maxUserIndex = userArrList.size()-1;
         User user1 = null;
         User user2 = null;
-        ArrayList<Interval> intervalList1 = null;
-        ArrayList<Interval> intervalList2 = null;
-        ArrayList<Interval> outputIntervalList = new ArrayList<>();
+        ArrayList<Interval> intervals1 = null;
+        ArrayList<Interval> intervals2 = null;
+        ArrayList<Interval> outputIntervals = new ArrayList<>();
         ArrayList<Group> grpsArrList = new ArrayList<>();
         ArrayList<User> userOutputArrList = new ArrayList<>();
-
+        
         // loop through userArrList
-        while (userIndex1 < maxUserIndex) {
+        while(userIndex1 < maxUserIndex){
             System.out.println("-----------------------------------------");
-
+            
             // get user 1 and 2, and intervals for these 2 users
-            // userArrList is a global variable
             user1 = userArrList.get(userIndex1);
-
-            user2 = userArrList.get(userIndex2 + 1);
-            intervalList1 = user1.getIntervalArrList();
-            intervalList2 = user2.getIntervalArrList();
-            int intervalIndex1 = 0;
-            int intervalIndex2 = 0;
-
-            //for every user2
-            while (userIndex2 < maxUserIndex) {
-                //if the while(userIndex2 < maxUserIndex) is not the first loop
-                if (counter > 0) {
-                    user2 = userArrList.get(userIndex2 + 1);
-                    intervalList2 = user2.getIntervalArrList();
+            
+            user2 = userArrList.get(userIndex2+1);
+            intervals1 = user1.getIntervalArrList();
+            intervals2 = user2.getIntervalArrList();
+            int i = 0;
+            int a = 0;
+            
+            while(userIndex2 < maxUserIndex){
+                if(counter > 0){
+                    user2 = userArrList.get(userIndex2+1);
+                    intervals2 = user2.getIntervalArrList();
                 }
                 System.out.println("----------- user1 name = " + user1.getName());
                 System.out.println("----------- user2 name = " + user2.getName());
                 System.out.println("----------- userIndex2 = " + userIndex2);
-                while (intervalIndex2 < intervalList2.size()) {
-                    Interval tempInterval = intervalList1.get(intervalIndex1).overlap(intervalList2.get(intervalIndex2));
-                    System.out.println("tempInterval null = " + (tempInterval == null));
+                while(a < intervals2.size()){
+                    Interval tempInterval = intervals1.get(i).overlap(intervals2.get(a));
+                    System.out.println("tempInterval = " + (tempInterval == null));
                     
-                    // if there is an overlap, 
-                    // 
-                    if (tempInterval != null) {
+                    if(tempInterval != null){
                         // if prevEndTime == null, then set prevEndTime, lastEndTime, firstStartTime
-                        if (prevEndTime == null) {
+                        if(prevEndTime == null){
                             System.out.println("prevEndTime = " + prevEndTime);
-                            intervalDuration += tempInterval.getDuration();
+                            duration += tempInterval.getDuration();
                             prevEndTime = tempInterval.getEndTime();
-                            tempInterval.setDuration(intervalDuration);
-                            outputIntervalList.add(tempInterval);
-                        } else {
+                            tempInterval.setDuration(duration);
+                            outputIntervals.add(tempInterval);
+                        }
+                        else{
                             System.out.println("prevEndTime = " + prevEndTime);
                             // adding one second to the prevEndTime - exclusive
                             long time = prevEndTime.getTime() + 1000;
-
+                            
                             //if prevEndTime < new startTime
-                            if (prevEndTime.before(tempInterval.getStartTime())) {
+                            if(prevEndTime.before(tempInterval.getStartTime())){
                                 Date newTime = new Date(time);
-
+                                
                                 //if prevEndTime + 1 min =/> new startTime
-                                if (newTime.equals(tempInterval.getStartTime())) {
-                                    intervalDuration += tempInterval.getDuration() + 1000;
+                                if(newTime.equals(tempInterval.getStartTime())){
+                                    duration += tempInterval.getDuration() + 1000;
                                     prevEndTime = tempInterval.getEndTime();
-                                    tempInterval.setDuration(intervalDuration);
-                                    outputIntervalList.add(tempInterval);
+                                    tempInterval.setDuration(duration);
+                                    outputIntervals.add(tempInterval);
                                 }
                             }
                         }
-                        if (intervalIndex1 < intervalList1.size() - 1) {
-                            intervalIndex1++;
-                        } else {
-                            intervalIndex1 = 0;
+                        if(i < intervals1.size()-1){
+                            i++;
                         }
-                        if (intervalIndex2 < intervalList2.size() - 1) {
-                            intervalIndex2++;
-                        } else {
-                            intervalIndex2 = 0;
+                        else{
+                            i = 0;
                         }
-                        System.out.println("a = " + intervalIndex2 + ", i = " + intervalIndex1);
-
-                        if (intervalIndex2 == 0 && intervalIndex1 == 0) {
+                        if(a < intervals2.size()-1){
+                            a++;
+                        }
+                        else{
+                            a = 0;
+                        }
+                        System.out.println("a = " + a + ", i = " + i);
+                        
+                        if(a == 0 && i == 0){
                             break;
                         }
-                    } else {
-                        if (intervalIndex2 < intervalList2.size() - 1) {
-                            intervalIndex2++;
-                        } else if (intervalIndex1 < intervalList1.size() - 1) {
-                            intervalIndex1++;
-                            intervalIndex2 = 0;
-                            break;
-                        } else {
-                            intervalIndex2 = 0;
+                    }
+                    else{
+                        if(a < intervals2.size()-1){
+                            a++;
+                        }
+                        else if(i < intervals1.size()-1){
+                            i++;
+                            a = 0;
                             break;
                         }
-                        System.out.println("a = " + intervalIndex2 + ", i = " + intervalIndex1);
+                        else{
+                            a = 0;
+                            break;
+                        }
+                        System.out.println("a = " + a + ", i = " + i);
                     }
                 }
                 Group newGrp = new Group();
                 String name1 = user1.getName();
                 String name2 = user2.getName();
-                if (intervalDuration > 0 && !name1.equals(name2)) {
+                if(duration > 0 && !name1.equals(name2)){
                     System.out.println("---------in here----------");
-
+                    
                     userOutputArrList.add(user1);
                     userOutputArrList.add(user2);
-
-                    newGrp.setIntervals(outputIntervalList);
+                    
+                    newGrp.setIntervals(outputIntervals);
                     newGrp.setUsers(userOutputArrList);
-                    newGrp.setDuration(intervalDuration);
-
+                    newGrp.setDuration(duration);
+                    
                     System.out.println("user1 name = " + user1.getName());
                     System.out.println("user2 name = " + user2.getName());
-
+                    
                     boolean exists = false;
-                    for (int c = 0; c < grpsArrList.size(); c++) {
+                    for(int c = 0; c < grpsArrList.size(); c++){
                         System.out.println("in here =====================================================");
                         Group grp = grpsArrList.get(c);
                         exists = grp.isDuplicatedGroup(newGrp);
-                        if (exists) {
+                        if(exists){
                             break;
-                        } else {
+                        }
+                        else{
                             System.out.println("in same interval method ------");
                             exists = grp.addUserIfSameInterval(newGrp);
-                            if (exists) {
+                            if(exists){
                                 break;
                             }
                         }
                     }
-                    if (!exists) {
+                    if(!exists){
                         grpsArrList.add(newGrp);
                     }
                 }
                 counter++;
                 userIndex2++;
-
-                intervalDuration = 0;
+                
+                duration = 0;
                 prevEndTime = null;
                 userOutputArrList = new ArrayList<>();
-                outputIntervalList = new ArrayList<>();
+                outputIntervals = new ArrayList<>();
             }
             System.out.println("userIndex1 = " + userIndex1);
-
+            
             counter = 0;
             userIndex2 = -1;
             userIndex1++;
         }
         grpsArrList = validateGroups(grpsArrList);
         System.out.println("-------1--------");
-        for (int b = 0; b < grpsArrList.size(); b++) {
-            System.out.println(grpsArrList.get(b).getDuration() / 60000);
-            System.out.println((grpsArrList.get(b).getDuration() / 1000) % 60);
-            for (User user : grpsArrList.get(b).getUsers()) {
+        for(int b = 0; b < grpsArrList.size(); b++){
+            System.out.println(grpsArrList.get(b).getDuration()/60000);
+            System.out.println((grpsArrList.get(b).getDuration()/1000)%60);
+            for(User user : grpsArrList.get(b).getUsers()){
                 System.out.println(user.getName());
             }
             System.out.println("---------------");
         }
     }
-    // This method 
-    public static ArrayList<Group> validateGroups(ArrayList<Group> groups) {
-
+    
+    public static ArrayList<Group> validateGroups(ArrayList<Group> groups){
+        
 //        int userInd = 0;
 //        int intervalInd1 = 0;
 //        int intervalInd2 = 0;
@@ -421,19 +425,19 @@ public class TestCase2 {
 //                if(userOutputList.size() > 0){
 //                    
 //                    Group newGrp = new Group();
-//                    long intervalDuration = 0;
+//                    long duration = 0;
 //                    
 //                    System.out.println("intervalOutputList.size() == 1 = " + (intervalOutputList.size() == 1));
 //                    if(intervalOutputList.size() == 1){
 //                        Interval interval1 = intervalOutputList.get(0);
-//                        intervalDuration = interval1.getEndTime().getTime() - interval1.getStartTime().getTime();
-//                        newGrp.setDuration(intervalDuration);
+//                        duration = interval1.getEndTime().getTime() - interval1.getStartTime().getTime();
+//                        newGrp.setDuration(duration);
 //                    }
 //                    else if(intervalOutputList.size() > 1){
 //                        Interval interval1 = intervalOutputList.get(0);
 //                        Interval interval2 = intervalOutputList.get(intervalOutputList.size()-1);
-//                        intervalDuration = interval2.getEndTime().getTime() - interval1.getStartTime().getTime();
-//                        newGrp.setDuration(intervalDuration);
+//                        duration = interval2.getEndTime().getTime() - interval1.getStartTime().getTime();
+//                        newGrp.setDuration(duration);
 //                    }
 //                    newGrp.setUsers(userOutputList);
 //                    newGrp.setIntervals(intervalOutputList);

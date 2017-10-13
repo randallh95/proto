@@ -24,7 +24,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -35,7 +34,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -290,10 +288,8 @@ public class BootstrapServlet extends HttpServlet {
 
         // write validLocations to DB
         LocationDAO locationDAO = new LocationDAO();
-        String filePath = writeToCsvFile(validLocations, "valid-location-lookup.csv");
-        System.out.println("filePath is: " + filePath);
-        locationDAO.loadDataInfile(filePath);
-        locationDAO.closeConnection();
+        int[] insertedNumList = locationDAO.insertLocations(validLocations);
+        locationDAO.closeConnection(); // is this neccessary? Or will locationDAO be garbage collected upon return completion of this method?
 
         return errorList;
 
@@ -359,13 +355,11 @@ public class BootstrapServlet extends HttpServlet {
 
             rowNum++;
         }
-        
+
         // write validLocations to DB
         UserDAO userDAO = new UserDAO();
-        String filePath = writeToCsvFile(validUsers, "valid-demographics.csv");
-        System.out.println("filePath is: " + filePath);
-        userDAO.loadDataInfile(filePath);
-        userDAO.closeConnection();
+        int[] insertedNumList = userDAO.insertUsers(validUsers);
+        userDAO.closeConnection(); // is this neccessary? Or will userDAO be garbage collected upon return completion of this method?
 
         return errorList;
     }
@@ -411,8 +405,8 @@ public class BootstrapServlet extends HttpServlet {
         }
 
         // * The Set method *
-        HashSet<Integer> duplicatedRowNumbers = new HashSet<Integer>();
-        HashSet<String> uniqueConcatenatedStrings = new HashSet<String>();
+        final Set<Integer> duplicatedRowNumbers = new HashSet();
+        final Set<String> uniqueConcatenatedStrings = new HashSet<String>();
 
         int timestampAndMacAddressConcatenatedListSize = timestampAndMacAddressConcatenatedList.size();
         for (int i = timestampAndMacAddressConcatenatedListSize - 1; i >= 0; i--) {
@@ -472,21 +466,19 @@ public class BootstrapServlet extends HttpServlet {
         }
 
         // write validLocations to DB
-        String filePath = writeToCsvFile(validLocationReports, "valid-location.csv");
-        System.out.println("filePath is: " + filePath);
-        locationReportDAO.loadDataInfile(filePath);
-        locationReportDAO.closeConnection();
+        
+        int[] insertedNumList = locationReportDAO.insertLocationReports(validLocationReports);
+        locationReportDAO.closeConnection(); // is this neccessary? Or will userDAO be garbage collected upon return completion of this method?
 
         // println for debugging
         return errorList;
 
     }
 
-    private String writeToCsvFile(ArrayList<String[]> validList, String fileName) {
+    private void writeToCsvFile(ArrayList<String[]> validList) {
 
         final String path = getServletContext().getRealPath("") + "data" + File.separator;
-        String filePath = path + fileName;
-        String result = filePath.replace("\\", "/");
+        String filePath = path + "valid-location.csv";
 
         // feed in your array (or convert your data to an array)
         try (CSVWriter writer = new CSVWriter(new FileWriter(filePath))) {
@@ -496,8 +488,6 @@ public class BootstrapServlet extends HttpServlet {
             }
         } catch (IOException ex) {
             Logger.getLogger(BootstrapServlet.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            return result;
         }
     }
 

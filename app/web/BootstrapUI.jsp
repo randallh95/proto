@@ -5,12 +5,7 @@
 --%>
 
 <%@page import="is203.se.Entity.BootstrapError"%>
-<%// If not admin, redirect to LoginUI.jsp
-    if (session.getAttribute("adminUserName") == null){
-        response.sendRedirect("LoginUI.jsp");
-        return;
-    } 
-%>
+<!-- need to include protect.jsp -->
 
 <%@page import="java.util.Collections"%>
 <%@page import="java.util.Set"%>

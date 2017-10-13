@@ -1,11 +1,14 @@
+package is203.se.Entity;
+
+
+import java.util.ArrayList;
+import java.util.Date;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package is203.se.Entity;
-
-import java.util.ArrayList;
 
 /**
  *
@@ -18,21 +21,16 @@ public class User {
     private String email;
     private char gender;
     private long duration;
-    private ArrayList<Interval> intervalArrList = new ArrayList<>();
+    private ArrayList<Interval> intervalArrList;
     
-    public User(){
-        
-    }
-    
-    //gender to be small caps
-    public User(String macAddress, String name, String password, String email, char gender) {
+    public User(String macAddress, String name, String password, String email, char gender){
         this.macAddress = macAddress;
         this.name = name;
         this.password = password;
         this.email = email;
         this.gender = gender;
     }
-
+    
     public String getMacAddress() {
         return macAddress;
     }
@@ -87,18 +85,5 @@ public class User {
 
     public void setIntervalArrList(ArrayList<Interval> intervalArrList) {
         this.intervalArrList = intervalArrList;
-    }
-
-    public void addInterval(Interval interval){
-        intervalArrList.add(interval);
-    }
-    
-    @Override
-    public String toString() {
-        return "User{" + "macAddress=" + macAddress + ", name=" + name + ", password=" + password + ", email=" + email + ", gender=" + gender + ", interval size = " + intervalArrList.size() + '}';
-    }
-    
-    public boolean validateUser(String enteredPassword){
-        return enteredPassword.equals(this.password);
     }
 }

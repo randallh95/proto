@@ -11,7 +11,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -32,18 +31,6 @@ public class UserDAO {
             conn.setAutoCommit(false);
         } catch (SQLException e) {
             e.printStackTrace();
-        }
-    }
-    
-    public void loadDataInfile(String absoluteFilePath) {
-        String sql = "LOAD DATA LOCAL INFILE '" + absoluteFilePath + "' INTO TABLE user\n"
-                + "FIELDS TERMINATED BY ',' \n"
-                + "ENCLOSED BY '\"' \n"
-                + "LINES TERMINATED BY '\\n';";
-        try (Statement stmt  = conn.createStatement()) {
-            stmt.execute(sql);
-        } catch (SQLException ex) {
-            Logger.getLogger(LocationReportDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -12,8 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form method="post" action="AutomaticGroupDetectionServlet">
-            <input type="submit" value="Test AGD"/>
-        </form>
+        <h1>Hello World!</h1>
     </body>
 </html>
