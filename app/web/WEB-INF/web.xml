@@ -4,17 +4,9 @@
         <servlet-name>PopularPlacesServlet</servlet-name>
         <servlet-class>is203.se.Controller.PopularPlacesServlet</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>LoginJson</servlet-name>
-        <servlet-class>is201.se.json.LoginJson</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>PopularPlacesServlet</servlet-name>
         <url-pattern>/PopularPlacesServlet</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LoginJson</servlet-name>
-        <url-pattern>/LoginJson</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

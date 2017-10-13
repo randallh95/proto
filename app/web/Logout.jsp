@@ -14,7 +14,7 @@
     session.removeAttribute("user");
     
     session.invalidate();
-
+    
 %> 
 
         <h1>Logout was done successfully</h1>

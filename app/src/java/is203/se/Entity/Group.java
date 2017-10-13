@@ -1,23 +1,20 @@
-package is203.se.Entity;
-
-
-import java.util.ArrayList;
-import java.util.Date;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package is203.se.Entity;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author Bernice
  */
 public class Group {
-    private ArrayList<User> users;
+    private ArrayList<User> users = new ArrayList<>();
     private long duration;
-    private ArrayList<Interval> intervals;
+    private ArrayList<Interval> intervals = new ArrayList<>();
 
     public Group(){
         
@@ -90,16 +87,12 @@ public class Group {
         int i = 0;
         ArrayList<User> userArrList = inputGroup.getUsers();
         
-        System.out.println("in same interval method, " + userArrList.size());
-            System.out.println("in same interval method, " + (inputGroup.getDuration() == duration));
         if(inputGroup.getDuration() == duration){
             while(i < userArrList.size()){
-                    System.out.println("in same interval method, " + !users.contains(userArrList.get(i)));
-                    System.out.println("in same interval method, " + userArrList.get(i).getName());
                 if(!users.contains(userArrList.get(i))){
                     Interval interval1 = inputGroup.getIntervals().get(0);
                     Interval interval2 = intervals.get(0);
-                    System.out.println("in same interval method, " + interval1.getStartTime().equals(interval2.getStartTime()));
+                    
                     if(interval1.getStartTime().equals(interval2.getStartTime())){
                         addUsers.add(userArrList.get(i));
                     }
@@ -112,26 +105,48 @@ public class Group {
                 }
                 i++;
             }
-            System.out.println("addUsers = " + addUsers.size() + ", " + users.size());
             if(addUsers.size() > 0){
                 isSameIntervals = true;
                 users.addAll(addUsers);
                 addUsers.clear();
             }
-            System.out.println("addUsers = " + users.size());
         }
         return isSameIntervals;
     }
     
-//    public boolean createNewGroupIfOverlaps(Group inputGroup){
-//        int i = 0;
-//        int a = 0;
-//        boolean isOverlapped = false;
-//        ArrayList<User> userArrList = inputGroup.getUsers();
-//        ArrayList<Interval> intervalArrList = inputGroup.getIntervals();
-//        while(i < intervals.size()-1){
-//        
-//        }
-//        return isOverlapped;
-//    }
+    public int isSubsetOfAnotherGroup(Group group){
+        int isSubsetCount = 0;
+        int maxArrListSize = 0;
+        int returnInd = 0;
+        ArrayList<User> validateUserArrList1 = null;
+        ArrayList<User> validateUserArrList2 = null;
+        ArrayList<User> userArrList1 = group.getUsers();
+        
+        if(userArrList1.size() > users.size()){
+            returnInd = 1;
+            maxArrListSize = userArrList1.size();
+            validateUserArrList1 = userArrList1;
+            validateUserArrList2 = users;
+        }
+        else{
+            returnInd = 2;
+            maxArrListSize = users.size();
+            validateUserArrList1 = users;
+            validateUserArrList2 = userArrList1;
+        }
+        for(int userInd = 0; userInd < validateUserArrList2.size(); userInd++){
+            if(validateUserArrList1.contains(validateUserArrList2.get(userInd))){
+                isSubsetCount++;
+            }
+        }
+        if(isSubsetCount != maxArrListSize){
+            returnInd = 0;
+        }
+        return returnInd;
+    }
+    
+    @Override
+    public String toString() {
+        return "Group{" + "users size =" + users.size() + ", duration = " + duration + ", intervals size = " + intervals.size() + '}';
+    }
 }

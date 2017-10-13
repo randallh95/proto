@@ -15,14 +15,14 @@
         <h1>Welcome to SLOCA</h1></head>
     <body>
         <%
-            String errorMsg = request.getParameter("errorMsg");
+            String errorMsg = (String)request.getAttribute("errorMsg");
 
             if (errorMsg == null) {
                 errorMsg = "";
             }
         %>
         <%=errorMsg%>
-        <form action='LoginController.jsp' method='get'>
+        <form action='LoginServlet' method='post'>
             <table>
                 <tr>
                     <td>
